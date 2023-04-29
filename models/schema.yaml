@@ -1,0 +1,74 @@
+version : 2
+
+sources : 
+  - name : raw_covid19
+    schema : AIRBTYE_SCHEMA
+    database : AIRBYTE_DATABASE
+    description : a copy of covid19 demographics data from Google BigQuery Open Data.
+    tables :
+      - name : index
+        columns :
+          - name : _AIRBYTE_INDEX_HASHID
+            description : Hash column based on the values in the record
+            tests :
+              - unique
+              - not_null
+              
+      - name: demographics
+        colummns :
+          - name: AIRBTYE_DEMOGRAPHICS_HASHID
+            description : Hash column based on the values in the record
+            tests:
+              - unique
+              - not_null
+
+      - name: economy
+        columns:
+          - name: AIRBYTE_ECONOMY_HASHID
+            description: Hash column based on the values in the record.
+            tests:
+              - unique
+              - not_null
+
+      - name: epidemiology
+        columns:
+          - name: AIRBYTE_EPIDEMIOLOGY_HASHID
+            description: Hash column based on the values in the record.
+            tests:
+              - unique
+              - not_null
+
+models:
+  - name: base_index
+    config :
+      materialized : view
+
+  - name: base_demographics
+    config : 
+      materialized : view
+    columns :
+      - name : location_key
+        tests:
+          - unique
+          - not_null
+    
+  - name: base_economy
+    config:
+
+      materialized: view
+    columns:
+      - name: location_key
+        tests:
+          - unique
+          - not_null
+ 
+  - name: base_epidemiology
+    config:
+      tags: ['daily']
+      materialized: view
+    columns:
+      - name: location_key
+        tests:
+          - relationships:
+              to: ref('base_index')
+              field: location_key

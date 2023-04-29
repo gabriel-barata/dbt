@@ -1,4 +1,4 @@
-snowflake-dw:
+snowflake_dw:
   target: dev
   outputs:
     dev:
