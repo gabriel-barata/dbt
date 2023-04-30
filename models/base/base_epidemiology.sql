@@ -12,6 +12,7 @@ with base_epidemiology as (
         cumulative_deceased,
         cumulative_recovered,
         cumulative_tested 
+        
     FROM {{ source('raw_covid19', 'epidemiology') }}
 
 )

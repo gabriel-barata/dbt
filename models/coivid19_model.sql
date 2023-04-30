@@ -1,4 +1,8 @@
-{{ config(materialized = 'table') }}
+{{
+    config(
+        materialized='table'
+    )
+}}
 
 with epidemiology as (
 
@@ -12,7 +16,7 @@ demographics as (
     FROM {{ ref('base_demographics') }}
 
 ),
-economy ec as (
+economy as (
 
     SELECT *
     FROM {{ ref('base_economy') }}
@@ -44,7 +48,7 @@ epidemiology_join as (
         dm.population_female,
         dm.population_rural,
         dm.population_urban,
-        dm.opulation_largest_city,
+        dm.population_largest_city,
         dm.population_clustered,
         dm.population_density,
         dm.human_development_index,

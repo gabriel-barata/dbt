@@ -5,7 +5,8 @@ with base_economy as (
         gdp_usd,
         location_key,
         gdp_per_capita_usd,
-        human_capital_index,
+        human_capital_index
+        
     FROM {{ source('raw_covid19', 'economy') }}
 
 )
